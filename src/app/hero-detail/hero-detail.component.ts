@@ -12,9 +12,10 @@ import { HeroService } from '../hero.service';
 export class HeroDetailComponent implements OnInit {
     hero: Hero;
 
-    constructor(private route: ActivatedRoute,
-                private heroService: HeroService,
-                private location: Location) { }
+    constructor(
+        private route: ActivatedRoute,
+        private heroService: HeroService,
+        private location: Location) { }
 
     ngOnInit(): void {
         this.getHero();
@@ -24,6 +25,11 @@ export class HeroDetailComponent implements OnInit {
         const id = Number(this.route.snapshot.paramMap.get('id'));
         this.heroService.getHero(id)
             .subscribe(hero => this.hero = hero);
+    }
+
+    save(): void {
+        this.heroService.updateHero(this.hero)
+            .subscribe(() => this.goBack());
     }
 
     goBack(): void {
